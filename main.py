@@ -2,6 +2,8 @@ from string import ascii_lowercase
 
 import requests
 
+debug = True
+
 
 def get_substrings(source_string, start, end):
     """Returns a list of substrings that are found inside 'str' between the 'start' string and 'end' string"""
@@ -32,19 +34,14 @@ def get_substrings(source_string, start, end):
     return substrings
 
 
-def crawl():
+def crawl(filename, url):
     """Loops through all pages of the site and appends found words to 'wordlist.txt' file"""
     print("Starting site scan")
-
-    filename = 'wordlist.txt'
 
     # Fake windows 10 mozilla user-agent to bypass firewall
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
     }
-
-    # base url
-    url = 'https://dicionario.aizeta.com/verbetes/todos/'
 
     # This marks the beginning of a word
     search_prefix = "<div class=\"info-feat\"><p><b>"
@@ -59,28 +56,31 @@ def crawl():
         # Iterate through the whole alphabet
         for c in letters:
             # Append current letter to url, and start from page 1
-            current_url = url + c + '/1'
-            response = requests.get(url, headers=headers)
+            current_page = 1
+            current_url = url + c + '/'
+            response = requests.get(current_url + str(current_page), headers=headers)
             result = get_substrings(response.text, search_prefix, search_suffix)
             # Append current page to url
             while result:
-                print(result)
-                # Get the current page and update url string to page+1
-                current_page = current_url.split('/')[-1]
-                sz = len(current_page)
-                current_page = int(current_page)
-                current_url = current_url[:-sz]
-                current_url = current_url + str(current_page + 1)
-                print(current_url)
+                if debug:
+                    print(result)
+                # Update current page and url string
+                current_page += 1
+                new_current_url = current_url + str(current_page)
+                if debug:
+                    print(new_current_url)
 
                 # Append current results to file
                 for item in result:
                     f.write("%s\n" % item)
 
                 # Fetch results from next page
-                response = requests.get(current_url, headers=headers)
+                response = requests.get(new_current_url, headers=headers)
                 result = get_substrings(response.text, search_prefix, search_suffix)
 
 
 if __name__ == '__main__':
-    crawl()
+    crawl('substantivos.txt', 'https://dicionario.aizeta.com/verbetes/substantivo/')
+    crawl('adjetivos.txt', 'https://dicionario.aizeta.com/verbetes/adjetivo/')
+    crawl('verbos.txt', 'https://dicionario.aizeta.com/verbetes/verbo/')
+    crawl('adverbios.txt', 'https://dicionario.aizeta.com/verbetes/adverbio/')
