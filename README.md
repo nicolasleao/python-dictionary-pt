@@ -1,2 +1,2 @@
 # dict-web-crawler
-Python spider to create a wordlist containing all words on a portuguese dictionary.
+Python spider to create a database containing all words on a portuguese dictionary, organized in tables for different parts of speech.
