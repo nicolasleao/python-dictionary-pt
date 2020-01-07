@@ -59,7 +59,36 @@ def get_substrings(source_string, start, end):
     return substrings
 
 
-def format_string(source_string):
+def normalize_text(source_string):
     # convert utf-8 to ascii text
     result = unidecode.unidecode(source_string).lower()
     return result
+
+
+def normalize_meaning(source_string):
+    """Escape all HTML tags if any"""
+
+    flag = 0
+    index = 0
+
+    # Trash is a list containing all the html tags found in the source string
+    trash = []
+    for c in source_string:
+        if c == '<':
+            # Flag the start of the html tag
+            flag = index
+        elif c == '>':
+            # Append full tag from the flagged start to the current index
+            trash.append(source_string[flag:index+1])
+        index += 1
+
+    # Remove whitespaces from start and end of string
+    result = source_string.strip()
+
+    # Remove all html tags inside the trash variable
+    for item in trash:
+        result = result.replace(item, '')
+
+    # Return normalized string
+    return result
+

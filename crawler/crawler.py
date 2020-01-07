@@ -2,10 +2,10 @@ from string import ascii_lowercase
 
 import peewee
 import requests
-
 import util
+import main
 
-debug = True
+debug = main.debug
 
 
 def crawl(model, url):
@@ -24,7 +24,7 @@ def crawl(model, url):
     search_suffix = "</b></p><i>"
 
     # Iterate through the whole alphabet
-    for c in ascii_lowercase[4:]:
+    for c in ascii_lowercase:
         # Append current letter to url, and start from page 1
         current_page = 1
         current_url = url + c + '/'
@@ -41,7 +41,7 @@ def crawl(model, url):
             # Insert results on database
             counter = 0
             for item in result:
-                normalized_text = util.format_string(item)
+                normalized_text = util.normalize_text(item)
                 if debug:
                     print(normalized_text)
                 try:
@@ -53,13 +53,12 @@ def crawl(model, url):
                     meanings = util.get_substrings(meaning_response.text, meaning_prefix, meaning_suffix)
 
                     if meanings:
+                        normalized_meaning = util.normalize_meaning(meanings[0])
                         if debug:
-                            print(meanings[0])
-                        model.create(text=normalized_text, meaning=meanings[0])
+                            print(normalized_meaning)
+                        model.create(text=item, normalized_text=normalized_text, meaning=normalized_meaning)
                     else:
-                        model.create(text=normalized_text, meaning="")
-                except peewee.IntegrityError:
-                    pass
+                        model.create(text=item, normalized_text=normalized_text, meaning="")
                 except peewee.IntegrityError:
                     pass
                 counter += 1

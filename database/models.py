@@ -7,6 +7,7 @@ db = peewee.SqliteDatabase('database/dictionary.db')
 class BaseModel(peewee.Model):
     """Base model class, all models will inherit this class"""
     text = peewee.CharField(unique=True)
+    normalized_text = peewee.CharField()
     meaning = peewee.CharField()
 
     class Meta:
