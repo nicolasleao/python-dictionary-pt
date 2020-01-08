@@ -1,10 +1,9 @@
 import util
 from crawler import crawler
 from database import models
-import peewee
 
 debug = True
-crawl = True
+crawl = False
 
 
 if __name__ == '__main__':
@@ -21,7 +20,7 @@ if __name__ == '__main__':
             if command == 'get':
                 text = input("Query> ")
                 try:
-                    result = models.BaseModel.get(models.BaseModel.text == text)
+                    result = models.Verbo.get(models.Verbo.text == text)
                     print(result.meaning)
                 except:
-                    print('Instance not found')
+                    print('Instance not fo  und')
