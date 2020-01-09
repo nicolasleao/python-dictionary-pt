@@ -2,7 +2,7 @@ import peewee
 
 from database import models
 
-word = models.Verbete
+word = models.Any
 
 
 def get_match(text):
@@ -19,7 +19,7 @@ def get_simple_match(text):
     """Returns a word instance in the dictionary, selected by a simplified String match"""
     # Try to find a matching word
     try:
-        result = word.get(models.Verbo.normalized_text == text)
+        result = word.get(word.normalized_text == text)
         return result
     except peewee.DoesNotExist:
         return None

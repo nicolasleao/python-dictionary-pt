@@ -15,21 +15,21 @@ class BaseModel(peewee.Model):
         database = db
 
 
-class Verbo(BaseModel):
-    """This class represents the 'Verbo' table"""
+class Any(BaseModel):
+    """This class represents the 'Any' table"""
 
 
-class Verbete(BaseModel):
-    """This class represents the 'Verbete' table"""
+class Verb(BaseModel):
+    """This class represents the 'Verb' table"""
 
 
-class Substantivo(BaseModel):
-    """This class represents the 'Substantivo' table"""
+class Noun(BaseModel):
+    """This class represents the 'Noun' table"""
 
 
-class Adjetivo(BaseModel):
-    """This class represents the 'Adjetivo' table"""
+class Adjective(BaseModel):
+    """This class represents the 'Adjective' table"""
 
 
-class Adverbio(BaseModel):
-    """This class represents the 'Adverbio' table"""
+class Adverb(BaseModel):
+    """This class represents the 'Adverb' table"""

@@ -11,6 +11,7 @@ def create_tables():
     except peewee.OperationalError:
         print("'Verbete' table already exists!")
 
+
 def get_substrings(source_string, start, end):
     """Returns a list of substrings that are found inside 'str' between the 'start' string and 'end' string"""
     substrings = []

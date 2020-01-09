@@ -3,17 +3,16 @@ from string import ascii_lowercase
 import peewee
 import requests
 
-import main
+import dictionary
 from util import util
 
-debug = main.debug
+debug = dictionary.debug
 
 
 def crawl(model, url):
-    """Loops through all pages of the site and appends found words to 'wordlist.txt' file"""
-    print("Starting site scan")
+    """Loops through all pages of the site and add words to database"""
 
-    # Fake windows 10 mozilla user-agent to bypass firewall
+    # Fake user-agent to bypass firewall
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
     }
@@ -36,36 +35,28 @@ def crawl(model, url):
             # Update current page and url string
             current_page += 1
             new_current_url = current_url + str(current_page)
-            if debug:
-                print(new_current_url)
 
             # Insert results on database
             counter = 0
             for item in result:
                 normalized_text = util.normalize_text(item)
-                if debug:
-                    print(normalized_text)
                 try:
                     # Try to get the meanings for the current word
                     meaning_url = 'https://dicionario.aizeta.com/significado/' + normalized_text
-                    meaning_prefix = '<div class=\"line quote\"><p>'
-                    meaning_suffix = '</p></div>'
+                    meaning_prefix = '<blockquote>'
+                    meaning_suffix = '</blockquote>'
                     meaning_response = requests.get(meaning_url, headers=headers)
                     meanings = util.get_substrings(meaning_response.text, meaning_prefix, meaning_suffix)
 
                     if meanings:
                         normalized_meaning = util.normalize_meaning(meanings[0])
-                        if debug:
-                            print(normalized_meaning)
+                        print(normalized_meaning)
                         model.create(text=item, normalized_text=normalized_text, meaning=normalized_meaning)
                     else:
                         model.create(text=item, normalized_text=normalized_text, meaning="")
                 except peewee.IntegrityError:
                     pass
                 counter += 1
-
-            if debug:
-                print("Added " + str(counter) + " entries to the database.")
 
             # Fetch results from next page
             response = requests.get(new_current_url, headers=headers)
