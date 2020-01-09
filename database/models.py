@@ -19,6 +19,10 @@ class Verbo(BaseModel):
     """This class represents the 'Verbo' table"""
 
 
+class Verbete(BaseModel):
+    """This class represents the 'Verbete' table"""
+
+
 class Substantivo(BaseModel):
     """This class represents the 'Substantivo' table"""
 

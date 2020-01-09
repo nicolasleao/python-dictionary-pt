@@ -2,8 +2,9 @@ from string import ascii_lowercase
 
 import peewee
 import requests
-import util
+
 import main
+from util import util
 
 debug = main.debug
 
