@@ -1,8 +1,7 @@
 # python-pt-dictionary
 A brazilian portuguese dictionary stored in an SQLite database for fast querying.
 The words in this dictionary and their meanings were collected from the [AIZETA](https://dicionario.aizeta.com/) 
-dictionary by a web crawler, stored in the [crawler](./crawler/crawler.py) file in this repository, feel free to study 
-or reuse it.
+dictionary by a [web crawler](./crawler/crawler.py).
 
 ## Installation
 The installation process is very simple, since the whole project is a python package, you can simply clone this repository
