@@ -5,13 +5,11 @@ dictionary by a web crawler, stored in the [crawler](./crawler/crawler.py) file 
 or reuse it.
 
 ## Installation
-The installation process is very simple, since the whole project is a python package, you can simply use:
-```shell script
-pip install python_pt_dictionary
-```
-Or, alternatively, you can clone this repository inside your project using:
+The installation process is very simple, since the whole project is a python package, you can simply clone this repository
+inside your project:
 ```shell script
 git clone https://github.com/nicolasleao/python_pt_dictionary.git
+pip install -r python_pt_dictionary/requirements.txt
 ```
 
 Once the installation is complete, you can import the package inside your project using:

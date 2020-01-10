@@ -6,10 +6,34 @@ from database import models
 
 def create_tables():
     try:
-        models.Verbete.create_table()
-        print("'Verbete' table created successfully!")
+        models.Any.create_table()
+        print("'any' table created successfully!")
     except peewee.OperationalError:
-        print("'Verbete' table already exists!")
+        print("'any' table already exists!")
+
+    try:
+        models.Verb.create_table()
+        print("'verb' table created successfully!")
+    except peewee.OperationalError:
+        print("'verb' table already exists!")
+
+    try:
+        models.Noun.create_table()
+        print("'noun' table created successfully!")
+    except peewee.OperationalError:
+        print("'noun' table already exists!")
+
+    try:
+        models.Adjective.create_table()
+        print("'adjective' table created successfully!")
+    except peewee.OperationalError:
+        print("'adjective' table already exists!")
+
+    try:
+        models.Adverb.create_table()
+        print("'adverb' table created successfully!")
+    except peewee.OperationalError:
+        print("'adverb' table already exists!")
 
 
 def get_substrings(source_string, start, end):

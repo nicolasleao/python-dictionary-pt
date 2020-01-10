@@ -1,8 +1,6 @@
 from enum import Enum
 
-from crawler import crawler
-from database import models
-from util import util, selectors
+from util import selectors
 
 # General behaviour variables
 debug = False
@@ -37,12 +35,3 @@ def select(query, selector):
         return selectors.get_suffix_match(query)
     elif selector == Selector.SIMPLE_SUFFIX:
         return selectors.get_simple_suffix_match(query)
-
-
-if __name__ == '__main__':
-    util.create_tables()
-    crawler.crawl(models.Any, 'https://dicionario.aizeta.com/verbetes/todos/')
-    crawler.crawl(models.Verb, 'https://dicionario.aizeta.com/verbetes/verbo/')
-    crawler.crawl(models.Noun, 'https://dicionario.aizeta.com/verbetes/substantivo/')
-    crawler.crawl(models.Adjective, 'https://dicionario.aizeta.com/verbetes/adjetivo/')
-    crawler.crawl(models.Adverb, 'https://dicionario.aizeta.com/verbetes/adverbio/')
