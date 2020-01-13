@@ -1,4 +1,4 @@
-# python-pt-dictionary
+# python_pt_dictionary
 A brazilian portuguese dictionary stored in an SQLite database for fast querying.
 The words in this dictionary and their meanings were collected from the [AIZETA](https://dicionario.aizeta.com/) 
 dictionary by a [web crawler](./crawler/crawler.py).
@@ -33,7 +33,7 @@ dictionary.Selector.SIMPLE | Whole word, simplified match
 dictionary.Selector.PREFIX | Prefix, perfect match
 dictionary.Selector.SIMPLE_PREFIX | Prefix, simplified match
 dictionary.Selector.SUFFIX | Suffix, perfect match
-dictionary.Selector.SIMPLE_SUFFIX | Suffix, perfect match
+dictionary.Selector.SIMPLE_SUFFIX | Suffix, simplified match
 
 Example:
 
